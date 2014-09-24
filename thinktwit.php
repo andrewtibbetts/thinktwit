@@ -1121,14 +1121,17 @@
 						// Get the user details
 						$user = $tweet["user"];
 						
+						// Modify the avatar URL to get the 'bigger' picture
+						$profile_image_url = str_replace('_normal','_bigger',$user["profile_image_url"]);
+						
 						// Make the content links clickable
 						$content = ThinkTwit::convert_twitter_content_to_links($content);
 						
 						// Download the avatar and get the local filename
-						$filename = ThinkTwit::download_avatar($use_curl, $user["screen_name"], $user["profile_image_url"]);
+						$filename = ThinkTwit::download_avatar($use_curl, $user["screen_name"], $profile_image_url);
 						
 						// Create a tweet and add it to the array
-						$tweets[] = new Tweet("http://twitter.com/" . $user["screen_name"], $filename, $user["profile_image_url"], $user["name"], $user["screen_name"], $content, strtotime($tweet["created_at"]));
+						$tweets[] = new Tweet("http://twitter.com/" . $user["screen_name"], $filename, $profile_image_url, $user["name"], $user["screen_name"], $content, strtotime($tweet["created_at"]));
 					}
 				}
 			}
